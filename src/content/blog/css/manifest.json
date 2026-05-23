@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "金额计算与高亮工具",
+  "version": "1.4",
+  "description": "自动转换金额为万单位，高亮特定值，提供价税合计及跨域账号同步填充。",
+  "permissions": [
+    "clipboardWrite",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.hubei.chinatax.gov.cn/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://dppt.hubei.chinatax.gov.cn/*",
+        "*://etax.hubei.chinatax.gov.cn/*",
+        "*://tpass.hubei.chinatax.gov.cn/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "48": "icon.png"
+  }
+}
