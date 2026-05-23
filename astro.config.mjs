@@ -8,6 +8,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
 	site: 'https://accountder.github.io',
 	base: '/workspace.io',
+		outDir: 'docs',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
