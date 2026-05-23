@@ -369,3 +369,7 @@ setInterval(() => {
 ```
 
 > 完整源码文件（含 icon）可在本博客仓库的 `src/content/blog/css/` 目录下找到。
+
+---
+
+*本插件代码由 Google Gemini 生成，人工测试并修改后发布。*
