@@ -6,44 +6,48 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
+			<h1>👋 你好</h1>
+			<p>这里是我的个人技术博客，记录工作中遇到的问题和解决方案，以及一些开源项目的使用心得。</p>
+			<h2>关于我</h2>
 			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
+				<li>主要关注前端开发、浏览器扩展、自动化工具</li>
+				<li>偶尔写一些效率工具和脚本</li>
+				<li>文章内容以实用为主，注重可复现的操作步骤</li>
 			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<p>最新文章可以在 <a href={`${import.meta.env.BASE_URL}blog`}>博客</a> 页面查看。</p>
 		</main>
 		<Footer />
 	</body>
 </html>
+<style>
+	main {
+		max-width: 720px;
+		margin: auto;
+		padding: 2em 1em;
+		line-height: 1.8;
+	}
+	h1 {
+		font-size: 2.5em;
+		margin-bottom: 0.5em;
+	}
+	h2 {
+		margin-top: 2em;
+		font-size: 1.5em;
+	}
+	ul {
+		padding-left: 1.5em;
+	}
+	li {
+		margin-bottom: 0.5em;
+	}
+	a {
+		color: var(--accent);
+	}
+</style>
