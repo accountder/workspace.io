@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-bvzihdzo> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/workspace.io/favicon.svg"><link rel="icon" href="/workspace.io/favicon.ico"><link rel="sitemap" href="/workspace.io/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="财税笔记" href="https://accountder.github.io/workspace.io/rss.xml"><meta name="generator" content="Astro v6.3.7"><style>@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/workspace.io/_astro/fonts/0acb86e25896d19b.woff") format("woff");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/workspace.io/_astro/fonts/140e50f8227021ab.woff") format("woff");font-display:swap;font-weight:700;font-style:normal;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:700;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}:root{--font-atkinson:Atkinson-c7f4c4e8b285552f,"Atkinson-c7f4c4e8b285552f fallback: Arial",sans-serif;}</style><link rel="preload" href="/workspace.io/_astro/fonts/0acb86e25896d19b.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/workspace.io/_astro/fonts/140e50f8227021ab.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://accountder.github.io/workspace.io/blog/tax-automa/automa-tax-workflow-blog/"><!-- Primary Meta Tags --><title>用 Automa 打通湖北税务发票查询自动化：从身份切换到批量导出的一次工程化拆解</title><meta name="title" content="用 Automa 打通湖北税务发票查询自动化：从身份切换到批量导出的一次工程化拆解"><meta name="description" content="用 Automa 实现湖北电子税务局自动化：代理身份切换、剪贴板输入、DOM 精准定位、异步等待、子流程复用与下载命名，串联成一条可维护的浏览器自动化流水线。"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://accountder.github.io/workspace.io/blog/tax-automa/automa-tax-workflow-blog/"><meta property="og:title" content="用 Automa 打通湖北税务发票查询自动化：从身份切换到批量导出的一次工程化拆解"><meta property="og:description" content="用 Automa 实现湖北电子税务局自动化：代理身份切换、剪贴板输入、DOM 精准定位、异步等待、子流程复用与下载命名，串联成一条可维护的浏览器自动化流水线。"><meta property="og:image" content="https://accountder.github.io/workspace.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://accountder.github.io/workspace.io/blog/tax-automa/automa-tax-workflow-blog/"><meta property="twitter:title" content="用 Automa 打通湖北税务发票查询自动化：从身份切换到批量导出的一次工程化拆解"><meta property="twitter:description" content="用 Automa 实现湖北电子税务局自动化：代理身份切换、剪贴板输入、DOM 精准定位、异步等待、子流程复用与下载命名，串联成一条可维护的浏览器自动化流水线。"><meta property="twitter:image" content="https://accountder.github.io/workspace.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><style>:root{--accent: #2337ff;--accent-dark: #000d8a;--black: 15, 18, 25;--gray: 96, 115, 159;--gray-light: 229, 233, 240;--gray-dark: 34, 41, 57;--gray-gradient: rgba(var(--gray-light), 50%), #fff;--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%)}body{font-family:var(--font-atkinson);margin:0;padding:0;text-align:left;background:linear-gradient(var(--gray-gradient)) no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:rgb(var(--gray-dark));font-size:20px;line-height:1.7}main{width:720px;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:0 0 .5rem;color:rgb(var(--black));line-height:1.2}h1{font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}.prose p{margin-bottom:2em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%;border-collapse:collapse}img{max-width:100%;height:auto;border-radius:8px}code{padding:2px 6px;background-color:rgb(var(--gray-light));border-radius:4px;font-size:.88em}pre{padding:1.5em;border-radius:8px;overflow-x:auto}pre>code{all:unset}blockquote{border-left:4px solid var(--accent);padding:0 0 0 20px;margin:0;font-size:1.333em}hr{border:none;border-top:1px solid rgb(var(--gray-light))}@media(max-width:720px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}a[data-astro-cid-eimmu3lg]{display:inline-block;text-decoration:none}a[data-astro-cid-eimmu3lg].active{font-weight:bolder;text-decoration:underline}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#fff;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media(max-width:720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}
+</style>
+<link rel="stylesheet" href="/workspace.io/_astro/BlogPost.CEnmZrrF.css"></head> <body data-astro-cid-bvzihdzo> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/workspace.io/" data-astro-cid-3ef6ksr2>财税笔记</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/workspace.io/" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Home </a> <a href="/workspace.io/blog" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Blog </a> <a href="/workspace.io/about" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> About </a> </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://github.com/accountder" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>GitHub</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> </div> </nav> </header> <main data-astro-cid-bvzihdzo> <article data-astro-cid-bvzihdzo> <div class="hero-image" data-astro-cid-bvzihdzo>  </div> <div class="prose" data-astro-cid-bvzihdzo> <div class="title" data-astro-cid-bvzihdzo> <div class="date" data-astro-cid-bvzihdzo> <time datetime="2026-05-24T16:00:00.000Z"> May 25, 2026 </time>  </div> <h1 data-astro-cid-bvzihdzo>用 Automa 打通湖北税务发票查询自动化：从身份切换到批量导出的一次工程化拆解</h1> <hr data-astro-cid-bvzihdzo> </div>  <h1 id="用-automa-打通湖北税务发票查询自动化从身份切换到批量导出的一次工程化拆解">用 Automa 打通湖北税务发票查询自动化：从身份切换到批量导出的一次工程化拆解</h1>
+<p>在这套自动化方案里，Automa 被用来承接一个典型的税务门户操作链路：先在湖北省电子税务局完成代理身份切换，再进入数电票查询页面，批量设置筛选条件，查询发票数据，并预留导出全部数据的能力。整个实现不是简单的“录制点击”，而是把页面跳转、剪贴板输入、DOM 精准定位、异步等待、子流程复用和下载命名串成了一条可维护的浏览器自动化流水线。</p>
+<p>本文基于目录下两个 Automa 工作流文件进行分析：</p>
+<ul>
+<li><code>身份切换.automa.json</code></li>
+<li><code>全量自动化.automa (1).json</code></li>
+</ul>
+<p>两个文件的结构高度相似，主流程均包含 18 个节点，并内嵌 4 个子流程：<code>正数-是</code>、<code>发票正常</code>、<code>全量发票11</code>、<code>发票导出</code>。主要差异在于，<code>全量自动化</code> 比 <code>身份切换</code> 多了一条从“点击确认”继续进入发票查询配置阶段的连线，因此它更接近完整业务流程；<code>身份切换</code> 则更像一个身份切换阶段的版本快照。</p>
+<h2 id="一业务目标与自动化边界">一、业务目标与自动化边界</h2>
+<p>这套流程解决的是“多步骤税务系统人工操作”的自动化问题。人工操作时，用户通常需要复制纳税人名称，打开湖北税务统一身份切换页面，搜索并进入代理企业身份，再切换到发票查询页面，设置开票日期、是否正数发票、发票状态等条件，最后查询并导出数据。</p>
+<p>Automa 在这里承担了三类职责：</p>
+<ol>
+<li>页面编排：打开身份切换页、进入查询页、调用不同子流程。</li>
+<li>表单交互：把剪贴板里的纳税人名称写入输入框，选择下拉筛选项，点击查询按钮。</li>
+<li>数据交付：从页面抓取公司名称，生成导出文件名，并等待浏览器下载。</li>
+</ol>
+<p>从工程角度看，这不是一个单点脚本，而是一条由主流程和子流程组成的自动化管道。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">  A["手动触发"] --> B["打开代理身份切换页"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  B --> C["读取剪贴板中的纳税人名称"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  C --> D["写入纳税人名称输入框"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  D --> E["点击查询"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  E --> F["点击进入"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  F --> G["确认身份切换"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  G --> H["打开发票查询页并填写日期"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  H --> I["设置是否正数发票 = 是"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  I --> J["设置发票状态"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  J --> K["点击查询"]</span></span>
+<span class="line"><span style="color:#E1E4E8">  K -. "当前未连通" .-> L["导出全部并重命名文件"]</span></span></code></pre>
+<h2 id="二主流程先完成身份再进入业务页面">二、主流程：先完成身份，再进入业务页面</h2>
+<p>主流程的入口是手动触发器。触发后，Automa 打开以下地址：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>https://tpass.hubei.chinatax.gov.cn:8443/#/identitySwitch/agent</span></span></code></pre>
+<p>这一步对应湖北税务的代理身份切换页面。流程随后等待 1500ms，再通过 Clipboard 节点读取系统剪贴板，并将内容保存到 Automa 变量 <code>clipboardData</code>。</p>
+<p>这里的设计点很实用：纳税人名称没有硬编码在流程里，而是通过剪贴板注入。这意味着用户只需要在执行前复制公司名称，同一个流程就可以复用于不同主体。</p>
+<p>读取变量后，JS 节点会把 <code>clipboardData</code> 填入页面上的纳税人名称输入框：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> input</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> document.</span><span style="color:#B392F0">querySelector</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'input[placeholder="请输入纳税人名称"]'</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>脚本没有直接 <code>input.value = textToPaste</code> 后结束，而是调用了 <code>HTMLInputElement.prototype.value</code> 的原生 setter，并额外派发 <code>input</code>、<code>change</code> 事件。这一点非常关键。税务系统前端大概率由 Vue 或类似框架驱动，直接改 DOM 值可能不会同步到组件状态；使用原生 setter 加事件派发，可以让框架层正确感知输入变化。</p>
+<p>之后流程执行三个身份切换动作：</p>
+<ul>
+<li>精准定位 Element UI 的“查询”按钮并点击。</li>
+<li>等待查询结果中的“进入”按钮出现，滚动到视口中后点击。</li>
+<li>等待确认弹窗，点击 Element UI 主按钮样式下的“确定”。</li>
+</ul>
+<p>这一段实现明显考虑了页面异步加载和组件库事件机制。例如“进入”按钮使用最多 10 秒的轮询等待，“确定”按钮使用 5 秒轮询，并检查按钮尺寸，避免点到隐藏元素。</p>
+<h2 id="三子流程拆分把业务筛选条件模块化">三、子流程拆分：把业务筛选条件模块化</h2>
+<p>完整流程内嵌了 4 个子流程。这样的拆分方式是可取的，因为税务系统查询条件常会调整，把每个条件独立成子流程，比把所有点击都堆在主流程里更容易维护。</p>
+<h3 id="1-全量发票11进入数电票查询页并设置日期">1. <code>全量发票11</code>：进入数电票查询页并设置日期</h3>
+<p>该子流程打开：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>https://dppt.hubei.chinatax.gov.cn:8443/invoice-query/invoice-query</span></span></code></pre>
+<p>打开后等待 12 秒，再填写开票日期区间：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#E1E4E8">[</span></span>
+<span class="line"><span style="color:#E1E4E8">  { placeholder: </span><span style="color:#9ECBFF">"开票日期起"</span><span style="color:#E1E4E8">, value: </span><span style="color:#9ECBFF">"2025-10-01"</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">  { placeholder: </span><span style="color:#9ECBFF">"开票日期止"</span><span style="color:#E1E4E8">, value: </span><span style="color:#9ECBFF">"2025-12-31"</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>脚本通过 placeholder 定位日期输入框，写入值后派发 <code>input</code>、<code>change</code>，并补发一次 Enter 键。这个策略的目的同样是同步组件内部状态，尤其适合 TDesign、Vue 这类受控输入组件。</p>
+<p>需要注意的是，子流程里存在一个“点击查询按钮”的 JS 节点，但当前连线只到“填写日期”节点为止，没有继续连到该查询节点。因此实际执行时，日期填写完成后子流程就结束，查询动作由后续主流程或其他子流程触发。</p>
+<h3 id="2-正数-是选择是否正数发票">2. <code>正数-是</code>：选择是否正数发票</h3>
+<p>该子流程先激活当前标签页，然后通过 XPath 定位“是否正数发票”表单项下的 input：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>//label[contains(text(),'是否正数发票')]/ancestor::div[contains(@class,'t-form__item')]//input</span></span></code></pre>
+<p>随后使用键盘向下选择，并通过 JS 查找 <code>.t-select-option.t-is-focused</code> 或 <code>.t-select-option.t-is-hover</code> 的高亮选项进行点击确认。这个实现细节很有价值：它避免单纯按 Enter 导致页面全局查询被误触发。</p>
+<p>如果找不到高亮项，脚本会退化为直接点击文本为“是”的选项。最后再点击 TDesign 的“查询”按钮。</p>
+<h3 id="3-发票正常设置发票状态">3. <code>发票正常</code>：设置发票状态</h3>
+<p>该子流程从 label 文本“发票状态”出发，找到对应表单容器，再定位其中的 <code>input.t-input__inner</code>。随后执行一串键盘动作：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>ArrowDown, ArrowDown, Enter, ArrowDown, Enter, ArrowDown, Enter</span></span></code></pre>
+<p>这表示流程可能在选择多个发票状态选项。脚本把每次操作间隔控制在 250ms，并在最后发送 Escape、blur 收尾，关闭下拉菜单。</p>
+<p>从稳定性角度看，这种键盘序列依赖选项顺序。如果税务系统调整下拉选项排序，流程可能会选择错误状态。更稳健的方案是直接按选项文本定位并点击，而不是靠第几个 ArrowDown。</p>
+<h3 id="4-发票导出生成文件名并导出全部">4. <code>发票导出</code>：生成文件名并导出全部</h3>
+<p>导出子流程的设计思路是：</p>
+<ul>
+<li>从页面的公司名称元素中读取企业名称。</li>
+<li>拼接导出文件名，例如：<code>某某公司，四季度开具发票.xlsx</code>。</li>
+<li>保存到 Automa 变量 <code>finalFileName</code>。</li>
+<li>点击“导出”按钮，展开下拉菜单。</li>
+<li>点击“导出全部”。</li>
+<li>使用 Automa 的 Handle Download 节点等待下载，并把文件名设置为 <code>{{variables.finalFileName}}</code>。</li>
+</ul>
+<p>这是一种比较完整的下载交付设计。它没有让浏览器保存一个默认文件名，而是把业务语义写进文件名里，便于后续归档和识别。</p>
+<p>不过当前主流程中，导出子流程的入口节点处于未连通状态。也就是说，<code>发票导出</code> 子流程虽然已经写好，但在 <code>全量自动化</code> 主链路中不会被自动执行。要实现真正的端到端自动导出，需要把最终查询完成后的节点连接到“延迟 1000ms -> 执行发票导出”的分支。</p>
+<h2 id="四实现亮点不是录制点击而是面向组件状态编程">四、实现亮点：不是录制点击，而是面向组件状态编程</h2>
+<p>这套流程最值得肯定的是，它没有完全依赖坐标点击或录制回放，而是大量使用 DOM、文本、class、XPath 和事件派发来和页面组件交互。</p>
+<p>几个关键技术点包括：</p>
+<ul>
+<li>使用 <code>automaRefData('variables', 'clipboardData')</code> 读取 Automa 变量，并增加 10 次重试，规避变量异步写入延迟。</li>
+<li>使用原生 input setter 写入值，绕过前端框架对输入框 value 的代理限制。</li>
+<li>补发 <code>input</code>、<code>change</code>、<code>keydown</code>、<code>mousedown</code>、<code>mouseup</code> 等事件，提高 Vue/Element UI/TDesign 组件响应概率。</li>
+<li>使用轮询等待按钮出现，而不是固定等待到底，提升对网络和页面渲染速度差异的适应性。</li>
+<li>按文本匹配按钮，例如“查询”“进入”“确定”“导出全部”，比坐标和 DOM 层级路径更可维护。</li>
+<li>通过子流程复用筛选条件配置，让后续调整日期、状态、导出逻辑时不必重写主链路。</li>
+</ul>
+<p>这些做法体现了一个重要原则：浏览器自动化的稳定性不只取决于“能不能点到”，更取决于是否能让前端框架内部状态与 DOM 表现保持一致。</p>
+<h2 id="五当前风险与可改进点">五、当前风险与可改进点</h2>
+<p>第一，导出链路尚未接入主流程。<code>发票导出</code> 子流程存在，但当前没有从查询完成节点连到该子流程的有效边。建议在最后一次查询后增加等待结果加载的节点，再连接到导出子流程。</p>
+<p>第二，部分查询按钮脚本重复出现。主流程、<code>正数-是</code>、<code>发票正常</code>、<code>全量发票11</code> 中都有类似的 TDesign 查询按钮点击逻辑。后续可以保留一个标准子流程，减少重复维护成本。</p>
+<p>第三，日期区间是硬编码的 <code>2025-10-01</code> 到 <code>2025-12-31</code>。如果这是季度任务，建议改为 Automa 变量或全局配置，例如 <code>invoiceStartDate</code>、<code>invoiceEndDate</code>，避免每个季度手动改 JS。</p>
+<p>第四，<code>发票状态</code> 的选择依赖键盘顺序。只要下拉项顺序变化，结果就有偏差。建议改成展开下拉后按可见文本匹配具体状态。</p>
+<p>第五，部分选择器带有构建产物属性，例如 <code>data-v-a9af69c8</code>、<code>data-v-1f9709c8</code>。这类属性可能随前端构建版本变化。更推荐优先使用文本、placeholder、label 语义、表单容器关系等选择器。</p>
+<p>第六，等待策略可以更语义化。当前存在 500ms、1000ms、12000ms 等固定延迟。固定延迟简单但不够优雅：网络慢时可能不够，网络快时浪费时间。后续可以更多使用“等待某个元素出现”或“等待按钮可点击”的逻辑。</p>
+<h2 id="六推荐的端到端执行顺序">六、推荐的端到端执行顺序</h2>
+<p>按当前设计意图，一个完整的稳定版本应当是：</p>
+<ol>
+<li>复制目标纳税人名称。</li>
+<li>手动触发 Automa 主流程。</li>
+<li>打开代理身份切换页。</li>
+<li>从剪贴板读取纳税人名称并填入查询框。</li>
+<li>查询代理身份，点击进入，确认切换。</li>
+<li>打开数电票查询页。</li>
+<li>设置开票日期范围。</li>
+<li>设置“是否正数发票”为“是”。</li>
+<li>设置目标发票状态。</li>
+<li>点击查询并等待结果加载完成。</li>
+<li>执行导出全部。</li>
+<li>使用企业名称和季度信息生成业务化文件名。</li>
+<li>等待下载完成并覆盖同名文件。</li>
+</ol>
+<h2 id="七结论">七、结论</h2>
+<p>这两个 Automa 流程已经具备一个专业自动化脚本的雏形：它通过主流程编排业务路径，通过子流程封装筛选条件，通过 JS 直接处理复杂组件状态，并通过下载节点接管最终文件交付。相比普通录制式自动化，它更接近“可维护的浏览器 RPA”。</p>
+<p>当前最需要补齐的是端到端闭环：把查询结果页与 <code>发票导出</code> 子流程连通，并把日期、季度、发票状态等业务参数变量化。完成这两点后，这套流程就可以从“可运行脚本”升级为“可复用、可配置、可交付”的税务发票自动化工具。</p>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2026 财税笔记. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://github.com/accountder" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>GitHub</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> </div> </footer> </body></html>

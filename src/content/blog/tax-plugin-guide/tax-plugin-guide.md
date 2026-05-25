@@ -37,7 +37,7 @@ css/
 
 ### 3. 使用效果
 
-![插件截图](../../assets/screenshot-tax-plugin.png)
+![插件截图](../../../assets/screenshot-tax-plugin.png)
 
 加载后，打开湖北省电子税务局任意页面即可自动生效。
 
