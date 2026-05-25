@@ -368,7 +368,7 @@ setInterval(() => {
 }, 1500);
 ```
 
-> 完整源码文件（含 icon）可在本博客仓库的 `src/content/blog/css/` 目录下找到。
+> 完整源码文件（含 icon）可在本博客仓库的 `src/content/blog/tax-plugin-guide/css/` 目录下找到。
 
 ---
 
