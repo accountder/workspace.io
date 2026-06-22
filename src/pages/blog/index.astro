@@ -76,7 +76,7 @@ function getCategory(id: string): { label: string; color: string } {
 				padding: 0;
 			}
 
-			/* ── Individual card ── */
+			/* ── Cards (all equal) ── */
 			.post-list li {
 				width: calc(50% - 0.9rem);
 				background: white;
@@ -103,47 +103,18 @@ function getCategory(id: string): { label: string; color: string } {
 				box-shadow: 0 12px 32px rgba(var(--gray), 14%);
 			}
 
-			/* ── Featured (first) card ── */
-			.post-list li:first-child {
-				width: 100%;
-				display: flex;
-				flex-direction: row-reverse;
-				align-items: stretch;
-				gap: 0;
-			}
-			.post-list li:first-child .post-card-body {
-				flex: 1;
-				padding: 2.2rem 2.4rem;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-			}
-			.post-list li:first-child .post-card-body .title {
-				font-size: 1.15em;
-				margin-bottom: 0.4em;
-			}
-			.post-list li:first-child .post-card-body .description {
-				-webkit-line-clamp: 2;
-			}
-			.post-list li:first-child img {
-				width: 48%;
-				min-height: 220px;
-				object-fit: cover;
-				border-radius: 0;
-			}
-
-			/* ── Card image ── */
+			/* ── Card link ── */
 			.post-list li a {
 				display: block;
 				text-decoration: none;
 				color: inherit;
 				height: 100%;
 			}
+
+			/* ── Card image ── */
 			.post-list li .img-wrap {
 				overflow: hidden;
 				line-height: 0;
-			}
-			.post-list li:not(:first-child) .img-wrap {
 				border-radius: 18px 18px 0 0;
 			}
 			.post-list li img {
@@ -153,7 +124,7 @@ function getCategory(id: string): { label: string; color: string } {
 				display: block;
 				transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 			}
-			.post-list li:not(:first-child):hover img {
+			.post-list li:hover img {
 				transform: scale(1.06);
 			}
 
@@ -216,19 +187,8 @@ function getCategory(id: string): { label: string; color: string } {
 				.post-list li {
 					width: 100%;
 				}
-				.post-list li:first-child {
-					flex-direction: column;
-				}
-				.post-list li:first-child .post-card-body .title {
+				.post-card-body .title {
 					font-size: 1.15em;
-				}
-				.post-list li:first-child img {
-					width: 100%;
-					min-height: auto;
-					aspect-ratio: 2 / 1;
-				}
-				.post-list li:first-child .post-card-body {
-					padding: 1.3em 1.5em 1.6em;
 				}
 				.page-header h1 {
 					font-size: 2em;
