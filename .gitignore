@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# agent tooling
+.reasonix/
 # generated types
 .astro/
 
