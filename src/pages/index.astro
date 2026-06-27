@@ -2,7 +2,14 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const base = import.meta.env.BASE_URL;
+const recentPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
@@ -77,6 +84,23 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 						<p>建安制造 · 商贸批发 · 现代服务</p>
 					</div>
 				</div>
+			</section>
+
+			<section class="recent-posts">
+				<h2>最新文章</h2>
+				<ul class="post-list">
+					{
+						recentPosts.map((post) => (
+							<li>
+								<a href={`${base}/blog/${post.id}/`}>
+									<span class="post-title">{post.data.title}</span>
+									<span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+				<a href={`${base}/blog`} class="view-all">查看全部 &rarr;</a>
 			</section>
 		</main>
 		<Footer />
@@ -215,6 +239,64 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		color: rgb(var(--gray));
 		margin: 0;
 		line-height: 1.5;
+	}
+
+	/* Recent Posts */
+	.recent-posts {
+		margin-top: 2em;
+		padding-top: 2em;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+	.recent-posts h2 {
+		text-align: center;
+		font-size: 1.4em;
+		margin-bottom: 1em;
+		color: rgb(var(--black));
+	}
+	.post-list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 1.2em;
+	}
+	.post-list li {
+		padding: 0.8em 0;
+		border-bottom: 1px solid rgb(var(--gray-light), 0.5);
+	}
+	.post-list li:last-child {
+		border-bottom: none;
+	}
+	.post-list a {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		text-decoration: none;
+		color: inherit;
+		gap: 1em;
+	}
+	.post-title {
+		font-weight: 600;
+		color: rgb(var(--black));
+		transition: color 0.2s;
+	}
+	.post-list a:hover .post-title {
+		color: var(--accent);
+	}
+	.post-date {
+		font-size: 0.85em;
+		color: rgb(var(--gray));
+		white-space: nowrap;
+	}
+	.view-all {
+		display: block;
+		text-align: center;
+		font-size: 0.95em;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+		padding: 0.5em;
+	}
+	.view-all:hover {
+		text-decoration: underline;
 	}
 
 	@media (max-width: 640px) {

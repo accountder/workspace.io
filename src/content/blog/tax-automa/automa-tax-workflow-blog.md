@@ -1,8 +1,10 @@
----
+﻿---
 title: '基于 Automa 的数电票查询与导出自动化实践'
 description: '本文从工程实现角度拆解一个基于 Automa 的数电票查询与导出流程，重点分析筛选条件配置、组件状态同步、子流程复用、文件命名与下载交付等关键设计。'
 pubDate: 'May 25 2026'
 heroImage: './banner.png'
+category: '财税自动化'
+tags: ['Automa', '数电票', '浏览器自动化', '税务流程']
 ---
 
 # 基于 Automa 的数电票查询与导出自动化实践

@@ -1,9 +1,10 @@
 ---
+import { SITE_TITLE } from '../consts';
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} 财税笔记. All rights reserved.
+	&copy; {today.getFullYear()} {SITE_TITLE}. All rights reserved.
 	<div class="social-links">
 		<a href="https://github.com/accountder" target="_blank">
 			<span class="sr-only">GitHub</span>

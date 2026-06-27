@@ -12,13 +12,13 @@ const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-// 从文章路径推断分类标签
-function getCategory(id: string): { label: string; color: string } {
-	if (id.startsWith('tax-automa')) return { label: '财税自动化', color: '#1890ff' };
-	if (id.startsWith('tax-economist')) return { label: '财务分析', color: '#52c41a' };
-	if (id.startsWith('tax-plugin-guide')) return { label: '技术工具', color: '#722ed1' };
-	return { label: '综合', color: '#8c8c8c' };
-}
+// 分类颜色表（统一管理）
+const categoryColors: Record<string, string> = {
+	'财税自动化': '#1890ff',
+	'财务分析': '#52c41a',
+	'技术工具': '#722ed1',
+};
+const defaultColor = '#8c8c8c';
 ---
 
 <!doctype html>
@@ -225,27 +225,28 @@ function getCategory(id: string): { label: string; color: string } {
 				<ul class="post-list">
 					{
 						posts.map((post) => {
-							const cat = getCategory(post.id);
+							const catLabel = post.data.category || '综合';
+							const catColor = categoryColors[catLabel] || defaultColor;
 							return (
 								<li>
 									<a href={`${base}/blog/${post.id}/`}>
 										{post.data.heroImage && (
 											<div class="img-wrap">
-												<Image width={720} height={360} src={post.data.heroImage} alt="" />
+												<Image width={720} height={360} src={post.data.heroImage} alt="" loading="lazy" />
 											</div>
 										)}
 										<div class="post-card-body">
 											<span
 												class="category-tag"
-												style={`background: ${cat.color}18; color: ${cat.color}`}
+												style={`background: ${catColor}18; color: ${catColor}`}
 											>
-												{cat.label}
+												{catLabel}
 											</span>
 											<h4 class="title">{post.data.title}</h4>
 											<p class="meta">
 												<FormattedDate date={post.data.pubDate} />
 												<span class="dot"></span>
-												<span>{cat.label}</span>
+												<span>{catLabel}</span>
 											</p>
 											{post.data.description && (
 												<p class="description">{post.data.description}</p>

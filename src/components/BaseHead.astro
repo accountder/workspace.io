@@ -1,4 +1,4 @@
----
+﻿---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
@@ -55,3 +55,13 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "Person",
+	"name": SITE_TITLE,
+	"description": "财税合规 · 技术实践 · 效率工具",
+	"url": Astro.site?.href,
+	"sameAs": ["https://github.com/accountder"]
+})} />

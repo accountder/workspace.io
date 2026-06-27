@@ -1,4 +1,4 @@
-/*
+﻿/*
   The CSS in this style tag is based off of Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
@@ -26,7 +26,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 20px;
+	font-size: 17px;
 	line-height: 1.7;
 }
 main {
@@ -118,13 +118,42 @@ hr {
 }
 @media (max-width: 720px) {
 	body {
-		font-size: 18px;
+		font-size: 16px;
 	}
 	main {
 		padding: 1em;
 	}
 }
 
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--accent: #5b7dff;
+		--accent-dark: #99b0ff;
+		--black: 220, 225, 235;
+		--gray: 140, 150, 175;
+		--gray-light: 55, 60, 75;
+		--gray-dark: 200, 208, 220;
+		--gray-gradient: rgba(var(--gray-light), 80%), #1a1d27;
+	}
+	body {
+		background-color: #1a1d27;
+	}
+	header {
+		background: #1a1d27 !important;
+	}
+	.profile-card,
+	.stat-item,
+	.skill-card {
+		background: #222532 !important;
+		border-color: rgb(var(--gray-light)) !important;
+	}
+	.post-list li {
+		background: #222532 !important;
+		border-color: rgb(var(--gray-light)) !important;
+	}
+}
 .sr-only {
 	border: 0;
 	padding: 0;
@@ -142,3 +171,4 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+

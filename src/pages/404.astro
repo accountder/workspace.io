@@ -1,0 +1,59 @@
+﻿---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title="页面未找到 | {SITE_TITLE}" description="您访问的页面不存在" />
+	</head>
+	<body>
+		<Header />
+		<main class="not-found">
+			<h1>404</h1>
+			<p class="lead">页面未找到</p>
+			<p>您访问的页面不存在，可能已被移除或链接有误。</p>
+			<a href={`${base}/`} class="back-home">&larr; 返回首页</a>
+		</main>
+		<Footer />
+	</body>
+</html>
+<style>
+	.not-found {
+		text-align: center;
+		padding: 5em 1em;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+	.not-found h1 {
+		font-size: 5em;
+		margin: 0 0 0.2em;
+		color: var(--accent);
+		line-height: 1;
+	}
+	.lead {
+		font-size: 1.2em;
+		font-weight: 600;
+		color: rgb(var(--black));
+		margin-bottom: 0.5em;
+	}
+	.back-home {
+		display: inline-block;
+		margin-top: 1.5em;
+		padding: 0.6em 1.5em;
+		background: var(--accent);
+		color: white;
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: 600;
+		transition: opacity 0.2s;
+	}
+	.back-home:hover {
+		opacity: 0.85;
+	}
+</style>

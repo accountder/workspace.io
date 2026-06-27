@@ -1,8 +1,10 @@
----
+﻿---
 title: '电子税务局 Chrome 插件：金额计算、快捷办税与跨域账号填充'
 description: '一个专为湖北省电子税务局设计的 Chrome 插件，提供金额万单位转换、价税合计、快捷导航、自动填充登录等功能'
 pubDate: 'Feb 22 2024'
 heroImage: './banner.png'
+category: '技术工具'
+tags: ['Chrome插件', '电子税务局', '财税工具']
 ---
 
 ## 简介
