@@ -1,0 +1,75 @@
+﻿---
+const base = import.meta.env.BASE_URL;
+---
+
+<button
+	id="theme-toggle"
+	class="theme-toggle"
+	aria-label="切换亮暗主题"
+	title="切换亮暗主题"
+>
+	<svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+		<circle cx="12" cy="12" r="5" />
+		<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+	</svg>
+	<svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+		<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+	</svg>
+</button>
+
+<style>
+	.theme-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: 1px solid rgb(var(--gray-light), 0.6);
+		border-radius: 8px;
+		background: transparent;
+		color: rgb(var(--gray));
+		cursor: pointer;
+		transition: background 0.2s, color 0.2s;
+	}
+	.theme-toggle:hover {
+		background: rgb(var(--gray-light), 0.4);
+		color: rgb(var(--black));
+	}
+	.theme-toggle svg {
+		display: block;
+	}
+	/* Show/hide icons based on theme */
+	html:not([data-theme="dark"]) .sun-icon { display: none; }
+	html[data-theme="dark"] .moon-icon { display: none; }
+</style>
+
+<script is:inline>
+	const KEY = 'theme-preference';
+	const html = document.documentElement;
+	const btn = document.getElementById('theme-toggle');
+
+	function setTheme(theme) {
+		if (theme === 'dark') {
+			html.setAttribute('data-theme', 'dark');
+		} else {
+			html.removeAttribute('data-theme');
+		}
+		try { localStorage.setItem(KEY, theme); } catch {}
+	}
+
+	// Restore saved preference; fall back to system preference
+	const saved = (() => {
+		try { return localStorage.getItem(KEY); } catch { return null; }
+	})();
+	if (saved) {
+		setTheme(saved);
+	} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		setTheme('dark');
+	}
+
+	btn?.addEventListener('click', () => {
+		const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+		setTheme(next);
+	});
+</script>

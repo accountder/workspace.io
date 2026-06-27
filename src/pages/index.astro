@@ -1,4 +1,4 @@
----
+﻿---
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -260,7 +260,6 @@ const recentPosts = (await getCollection('blog'))
 	}
 	.post-list li {
 		padding: 0.8em 0;
-		border-bottom: 1px solid rgb(var(--gray-light), 0.5);
 	}
 	.post-list li:last-child {
 		border-bottom: none;
@@ -272,6 +271,12 @@ const recentPosts = (await getCollection('blog'))
 		text-decoration: none;
 		color: inherit;
 		gap: 1em;
+		padding: 0.6em 1em;
+		border-radius: 10px;
+		transition: background 0.2s;
+	}
+	.post-list a:hover {
+		background: rgb(var(--gray-light), 0.4);
 	}
 	.post-title {
 		font-weight: 600;
@@ -322,3 +327,4 @@ const recentPosts = (await getCollection('blog'))
 		}
 	}
 </style>
+

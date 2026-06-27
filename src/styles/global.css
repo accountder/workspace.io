@@ -126,7 +126,7 @@ hr {
 }
 
 
-/* Dark mode */
+/* Dark mode - system preference */
 @media (prefers-color-scheme: dark) {
 	:root {
 		--accent: #5b7dff;
@@ -139,21 +139,24 @@ hr {
 	}
 	body {
 		background-color: #1a1d27;
-	}
-	header {
-		background: #1a1d27 !important;
-	}
-	.profile-card,
-	.stat-item,
-	.skill-card {
-		background: #222532 !important;
-		border-color: rgb(var(--gray-light)) !important;
-	}
-	.post-list li {
-		background: #222532 !important;
-		border-color: rgb(var(--gray-light)) !important;
+		background-image: none;
 	}
 }
+/* Dark mode - manual toggle */
+html[data-theme="dark"] {
+	--accent: #5b7dff;
+	--accent-dark: #99b0ff;
+	--black: 220, 225, 235;
+	--gray: 140, 150, 175;
+	--gray-light: 55, 60, 75;
+	--gray-dark: 200, 208, 220;
+	--gray-gradient: rgba(var(--gray-light), 80%), #1a1d27;
+}
+html[data-theme="dark"] body {
+	background-color: #1a1d27;
+	background-image: none;
+}
+
 .sr-only {
 	border: 0;
 	padding: 0;
@@ -171,4 +174,8 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+
+
+
+
 
