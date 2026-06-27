@@ -33,10 +33,19 @@ const defaultColor = '#8c8c8c';
 			}
 
 			main {
-				width: 960px;
-				max-width: calc(100% - 2em);
+				width: 100%;
+				max-width: 1100px;
 				padding: 2.5em 1em 3em;
 				margin: 0 auto;
+			}
+			@media (max-width: 1140px) {
+				main { width: calc(100% - 2em); }
+			}
+			@media (max-width: 720px) {
+				main { width: calc(100% - 1.6em); padding: 2.5em 0.8em 3em; }
+			}
+			@media (max-width: 480px) {
+				main { padding: 1.5em 0.4em 2em; }
 			}
 
 			/* ── Page header ── */
@@ -66,19 +75,16 @@ const defaultColor = '#8c8c8c';
 				margin: 0 auto;
 			}
 
-			/* ── Post grid ── */
+			/* ── Post grid (responsive) ── */
 			.post-list {
-				display: flex;
-				flex-wrap: wrap;
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 				gap: 1.8rem;
 				list-style: none;
 				margin: 0;
 				padding: 0;
 			}
-
-			/* ── Cards (all equal) ── */
 			.post-list li {
-				width: calc(50% - 0.9rem);
 				background: var(--bg-card);
 				border: 1px solid rgb(var(--gray-light), 0.5);
 				border-radius: 18px;
@@ -103,7 +109,6 @@ const defaultColor = '#8c8c8c';
 				box-shadow: 0 12px 32px rgba(var(--gray), 14%);
 			}
 
-			/* ── Card link ── */
 			.post-list li a {
 				display: block;
 				text-decoration: none;
@@ -111,7 +116,6 @@ const defaultColor = '#8c8c8c';
 				height: 100%;
 			}
 
-			/* ── Card image ── */
 			.post-list li .img-wrap {
 				overflow: hidden;
 				line-height: 0;
@@ -128,7 +132,6 @@ const defaultColor = '#8c8c8c';
 				transform: scale(1.06);
 			}
 
-			/* ── Card body ── */
 			.post-card-body {
 				padding: 1.3em 1.5em 1.6em;
 			}
@@ -179,13 +182,10 @@ const defaultColor = '#8c8c8c';
 				overflow: hidden;
 			}
 
-			/* ── Responsive ── */
 			@media (max-width: 820px) {
 				.post-list {
-					gap: 1.2em;
-				}
-				.post-list li {
-					width: 100%;
+					grid-template-columns: 1fr;
+					gap: 1.2rem;
 				}
 				.post-card-body .title {
 					font-size: 1.15em;
@@ -196,9 +196,6 @@ const defaultColor = '#8c8c8c';
 			}
 
 			@media (max-width: 480px) {
-				main {
-					padding: 1.5em 0.8em 2em;
-				}
 				.post-list {
 					gap: 1em;
 				}
