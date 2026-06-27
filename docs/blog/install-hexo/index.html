@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="zh-CN" data-astro-cid-bvzihdzo> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/workspace.io/favicon.svg"><link rel="icon" href="/workspace.io/favicon.ico"><link rel="sitemap" href="/workspace.io/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="财税笔记" href="https://accountder.github.io/workspace.io/rss.xml"><meta name="generator" content="Astro v6.3.7"><style>@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/workspace.io/_astro/fonts/0acb86e25896d19b.woff") format("woff");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:Atkinson-c7f4c4e8b285552f;src:url("/workspace.io/_astro/fonts/140e50f8227021ab.woff") format("woff");font-display:swap;font-weight:700;font-style:normal;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:400;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}@font-face{font-family:"Atkinson-c7f4c4e8b285552f fallback: Arial";src:local("Arial");font-display:swap;font-weight:700;font-style:normal;size-adjust:99.3717%;ascent-override:80.1033%;descent-override:25.2587%;line-gap-override:0%;}:root{--font-atkinson:Atkinson-c7f4c4e8b285552f,"Atkinson-c7f4c4e8b285552f fallback: Arial",sans-serif;}</style><link rel="preload" href="/workspace.io/_astro/fonts/0acb86e25896d19b.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/workspace.io/_astro/fonts/140e50f8227021ab.woff" as="font" type="font/woff" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://accountder.github.io/workspace.io/blog/install-hexo/"><!-- Primary Meta Tags --><title>Install Hexo &amp; Hexo-Theme-Butterfly</title><meta name="title" content="Install Hexo &amp; Hexo-Theme-Butterfly"><meta name="description" content="使用 Docker 安装 Hexo 博客框架及 Butterfly 主题的步骤记录"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://accountder.github.io/workspace.io/blog/install-hexo/"><meta property="og:title" content="Install Hexo &amp; Hexo-Theme-Butterfly"><meta property="og:description" content="使用 Docker 安装 Hexo 博客框架及 Butterfly 主题的步骤记录"><meta property="og:image" content="https://accountder.github.io/workspace.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://accountder.github.io/workspace.io/blog/install-hexo/"><meta property="twitter:title" content="Install Hexo &amp; Hexo-Theme-Butterfly"><meta property="twitter:description" content="使用 Docker 安装 Hexo 博客框架及 Butterfly 主题的步骤记录"><meta property="twitter:image" content="https://accountder.github.io/workspace.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"财税笔记","description":"财税合规 · 技术实践 · 效率工具","url":"https://accountder.github.io/","sameAs":["https://github.com/accountder"]}</script><link rel="stylesheet" href="/workspace.io/_astro/Header.vQeUAxk5.css">
+<link rel="stylesheet" href="/workspace.io/_astro/BlogPost.CEnmZrrF.css"></head> <body data-astro-cid-bvzihdzo> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/workspace.io/" data-astro-cid-3ef6ksr2>财税笔记</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <a href="/workspace.io/" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Home </a> <a href="/workspace.io/blog" class="active" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> Blog </a> <a href="/workspace.io/about" data-astro-cid-3ef6ksr2="true" data-astro-cid-eimmu3lg> About </a> </div> <div class="social-links" data-astro-cid-3ef6ksr2> <button id="theme-toggle" class="theme-toggle" aria-label="切换亮暗主题" title="切换亮暗主题" data-astro-cid-x3pjskd3> <svg viewBox="0 0 16 16" fill="currentColor" width="18" height="18" class="theme-icon" data-astro-cid-x3pjskd3> <g class="sun-group" data-astro-cid-x3pjskd3> <circle cx="8" cy="8" r="3.4" data-astro-cid-x3pjskd3></circle> <path d="M8 0v2M8 14v2M0 8h2M14 8h2M2.34 2.34l1.42 1.42M12.24 12.24l1.42 1.42M2.34 13.66l1.42-1.42M12.24 3.76l1.42-1.42" stroke="currentColor" stroke-width="1.8" fill="none" data-astro-cid-x3pjskd3></path> </g> <path d="M14 8A6 6 0 0 1 2 8a4 4 0 0 0 6 6 6 6 0 0 0 6-6z" class="moon-body" data-astro-cid-x3pjskd3></path> </svg> </button>  <script>
+	const KEY = 'theme-preference';
+	const html = document.documentElement;
+	const btn = document.getElementById('theme-toggle');
+
+	function setTheme(theme) {
+		if (theme === 'dark') {
+			html.setAttribute('data-theme', 'dark');
+		} else {
+			html.removeAttribute('data-theme');
+		}
+		try { localStorage.setItem(KEY, theme); } catch {}
+	}
+
+	const saved = (() => {
+		try { return localStorage.getItem(KEY); } catch { return null; }
+	})();
+	if (saved) {
+		setTheme(saved);
+	} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		setTheme('dark');
+	}
+
+	btn?.addEventListener('click', () => {
+		const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+		setTheme(next);
+	});
+</script> <a href="https://github.com/accountder" target="_blank" class="github-link" title="GitHub" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>GitHub</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="18" height="18" fill="currentColor" data-astro-cid-3ef6ksr2> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path> </svg> </a> </div> </nav> </header> <main data-astro-cid-bvzihdzo> <article data-astro-cid-bvzihdzo> <div class="hero-image" data-astro-cid-bvzihdzo>  </div> <div class="prose" data-astro-cid-bvzihdzo> <div class="title" data-astro-cid-bvzihdzo> <div class="date" data-astro-cid-bvzihdzo> <time datetime="2022-09-16T16:00:00.000Z"> Sep 17, 2022 </time>  </div> <h1 data-astro-cid-bvzihdzo>Install Hexo &amp; Hexo-Theme-Butterfly</h1> <hr data-astro-cid-bvzihdzo> </div>  <h1 id="docker">Docker</h1>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>docker create --name=hexo \</span></span>
+<span class="line"><span>-e HEXO_SERVER_PORT=4000 \</span></span>
+<span class="line"><span>-v /opt/hexo:/app \</span></span>
+<span class="line"><span>-p 4000:4000 \</span></span>
+<span class="line"><span>spurin/hexo</span></span></code></pre>
+<h1 id="debian">Debian</h1>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>apt install nodejs npm</span></span></code></pre>
+<h2 id="1-hexo-install-in-the-required-directory">1. Hexo install in the required directory</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>npm install hexo -g</span></span></code></pre>
+<h2 id="2-initialization">2. Initialization</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>hexo init</span></span></code></pre>
+<h2 id="3-generate-static-files">3. Generate static files</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>hexo -g</span></span></code></pre>
+<h2 id="4-install-butterfly-theme">4. Install butterfly theme</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>npm i hexo-theme-butterfly</span></span></code></pre>
+<h2 id="5-run">5. Run</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>hexo s</span></span></code></pre>
+<h2 id="6-check-results">6. Check Results</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>http://localhost:4000</span></span></code></pre>
+<h1 id="install-aplayer-music">Install Aplayer music</h1>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>npm install hexo-tag-aplayer --save</span></span></code></pre>
+<p><code>_config.yml</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># APlayer  </span></span>
+<span class="line"><span># https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md  </span></span>
+<span class="line"><span>aplayer:  </span></span>
+<span class="line"><span>  meting: true  </span></span>
+<span class="line"><span>  asset_inject: false</span></span></code></pre>
+<p><code>_config.butterfly.yml</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># Inject the css and script (aplayer/meting)  </span></span>
+<span class="line"><span>aplayerInject:  </span></span>
+<span class="line"><span>  enable: true  </span></span>
+<span class="line"><span>  per_page: true</span></span></code></pre>
+<p><code>_config.butterfly.yml</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>inject:  </span></span>
+<span class="line"><span>  head:  </span></span>
+<span class="line"><span>  bottom:  </span></span>
+<span class="line"><span>    - &#x3C;div class="aplayer no-destroy" data-id="5183531430" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted>&#x3C;/div></span></span></code></pre>
+<h1 id="special-thanks">Special thanks</h1>
+<ul>
+<li><strong><a href="https://hexo.io/">Hexlo</a></strong></li>
+<li><strong><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></strong></li>
+</ul>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2026 财税笔记. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://github.com/accountder" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>GitHub</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> </div> </footer> </body></html>
