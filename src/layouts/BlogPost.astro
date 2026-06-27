@@ -1,4 +1,4 @@
----
+﻿---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
@@ -149,12 +149,12 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				border-radius: 5px;
 				font-size: 0.88em;
 				font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-				color: #d63384;
+				color: rgb(var(--gray-dark));
 			}
 			.prose :global(pre) {
 				position: relative;
 				border-radius: 12px;
-				border: 1px solid #1a1f2b;
+				border: 1px solid rgb(var(--gray-light));
 				margin: 1.8em 0;
 				padding: 0;
 				overflow: hidden;
@@ -169,7 +169,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
 				font-size: 0.88em;
 				line-height: 1.65;
-				color: #e1e4e8;
+				color: rgb(var(--gray-dark));
 			}
 			/* Language label on code blocks */
 			.prose :global(pre[data-language])::before {
@@ -179,9 +179,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				font-size: 0.75em;
 				font-family: var(--font-atkinson);
 				font-weight: 600;
-				color: rgba(255, 255, 255, 0.5);
-				background: rgba(255, 255, 255, 0.06);
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				color: rgb(var(--gray));
+				background: rgb(var(--gray-light), 0.3);
+				border-bottom: 1px solid rgb(var(--gray-light), 0.3);
 				text-transform: uppercase;
 				letter-spacing: 0.04em;
 			}
@@ -283,3 +283,4 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Footer />
 	</body>
 </html>
+
