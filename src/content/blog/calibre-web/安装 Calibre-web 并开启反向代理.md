@@ -4,6 +4,7 @@ description: '使用 Docker 部署 Calibre-web 并配置 Nginx 反向代理的�
 pubDate: 'Sep 17 2022'
 category: '技术笔记'
 tags: ['Calibre', 'Docker', '反向代理']
+heroImage: './banner.png'
 ---
 # 首先你的设备支持Docker
 ```
@@ -32,6 +33,10 @@ proxy_busy_buffers_size 256k;
 # 特别感谢
 * **[Nginx Proxy  Manager](https://nginxproxymanager.com/)**
 * **[Calibre-web](https://github.com/janeczku/calibre-web)**
+
+
+
+
 
 
 

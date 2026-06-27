@@ -4,6 +4,7 @@ description: '使用 Docker 部署 Freshrss 和 Rsshub 搭建个人 RSS 阅读�
 pubDate: 'Sep 17 2022'
 category: '技术笔记'
 tags: ['Freshrss', 'RSS', 'Docker']
+heroImage: './banner.png'
 ---
 # 首先你的设备支持Docker
 ```
@@ -37,6 +38,10 @@ diygod/rsshub
 # 特别感谢
 * **[Freshrss](https://freshrss.org/)**
 * **[Rsshub](https://docs.rsshub.app/)**
+
+
+
+
 
 
 
