@@ -7,11 +7,12 @@
 	aria-label="切换亮暗主题"
 	title="切换亮暗主题"
 >
-	<!-- Sun / moon icon — 用一个内联 SVG 根据当前 theme 旋转 -->
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20" class="theme-icon">
-		<circle cx="12" cy="12" r="5" />
-		<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" class="sun-rays" />
-		<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" class="moon-body" />
+	<svg viewBox="0 0 16 16" fill="currentColor" width="18" height="18" class="theme-icon">
+		<g class="sun-group">
+			<circle cx="8" cy="8" r="3.4" />
+			<path d="M8 0v2M8 14v2M0 8h2M14 8h2M2.34 2.34l1.42 1.42M12.24 12.24l1.42 1.42M2.34 13.66l1.42-1.42M12.24 3.76l1.42-1.42" stroke="currentColor" stroke-width="1.8" fill="none" />
+		</g>
+		<path d="M14 8A6 6 0 0 1 2 8a4 4 0 0 0 6 6 6 6 0 0 0 6-6z" class="moon-body" />
 	</svg>
 </button>
 
@@ -40,13 +41,11 @@
 	html[data-theme="dark"] .theme-icon {
 		transform: rotate(180deg);
 	}
-	/* In light mode: hide moon, show sun rays */
-	.sun-rays { opacity: 1; }
+	.sun-group { opacity: 1; }
 	.moon-body { opacity: 0; }
-	html[data-theme="dark"] .sun-rays { opacity: 0; }
+	html[data-theme="dark"] .sun-group { opacity: 0; }
 	html[data-theme="dark"] .moon-body { opacity: 1; }
-	/* Smooth opacity transition */
-	.theme-icon > path, .theme-icon > circle {
+	.theme-icon > g, .theme-icon > path {
 		transition: opacity 0.3s ease;
 	}
 </style>
@@ -79,4 +78,3 @@
 		setTheme(next);
 	});
 </script>
-
