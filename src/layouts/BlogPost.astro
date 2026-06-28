@@ -4,11 +4,19 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
 import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category } = Astro.props;
+
+// Related posts
+const allPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const relatedPosts = allPosts
+	.filter((p) => p.data.category === category && p.data.title !== title)
+	.slice(0, 2);
 ---
 
 <html lang="zh-CN">
@@ -251,7 +259,54 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					padding: 1em;
 				}
 			}
-		</style>
+					.related-posts {
+				max-width: 720px;
+				margin: 4em auto 0;
+				padding: 2em 0 0;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.related-posts h2 {
+				font-size: 1.3em;
+				margin-bottom: 1em;
+				color: rgb(var(--black));
+			}
+			.related-posts ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.6em;
+			}
+			.related-posts li {
+				border-radius: 10px;
+				transition: background 0.2s;
+			}
+			.related-posts li:hover {
+				background: rgb(var(--gray-light), 0.3);
+			}
+			.related-posts a {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0.7em 1em;
+				text-decoration: none;
+				color: inherit;
+				gap: 1em;
+			}
+			.related-title {
+				font-weight: 600;
+				color: rgb(var(--black));
+				transition: color 0.2s;
+			}
+			.related-posts a:hover .related-title {
+				color: var(--accent);
+			}
+			.related-date {
+				font-size: 0.85em;
+				color: rgb(var(--gray));
+				white-space: nowrap;
+			}	</style>
 	</head>
 
 	<body>
@@ -278,7 +333,26 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					</div>
 					<slot />
 				</div>
-			</article>
+				</article>
+			{
+				relatedPosts.length > 0 && (
+					<section class="related-posts">
+						<h2>相关文章</h2>
+						<ul>
+							{
+								relatedPosts.map((post) => (
+									<li>
+										<a href={`${import.meta.env.BASE_URL}/blog/${post.id}/`}>
+											<span class="related-title">{post.data.title}</span>
+											<span class="related-date"><FormattedDate date={post.data.pubDate} /></span>
+										</a>
+									</li>
+								))
+							}
+						</ul>
+					</section>
+				)
+			}
 		</main>
 		<Footer />
 	</body>
