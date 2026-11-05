@@ -113,12 +113,36 @@ function pickInspect(info) {
     api('/version'), api('/volumes'), api('/networks'), api('/images/json'),
   ]);
 
+  // 网络必须逐个 inspect，否则拿不到 IPAM（macvlan 的 subnet/gateway/parent 全在这）
+  const netDetail = [];
+  for (const n of networks) {
+    if (n.Name === 'none' || n.Name === 'host') continue;
+    if (n.Name.startsWith('GITEA-ACTIONS-')) continue;
+    try {
+      const full = await api(`/networks/${n.Id}`);
+      netDetail.push({
+        Name: full.Name,
+        Driver: full.Driver,
+        Scope: full.Scope,
+        Internal: full.Internal,
+        Attachable: full.Attachable,
+        IPAM: full.IPAM,
+        Options: full.Options,
+        Labels: full.Labels,
+      });
+    } catch (e) {
+      netDetail.push({ Name: n.Name, Driver: n.Driver, error: e.message });
+    }
+  }
+
   const result = {
     collectedAt: new Date().toISOString(),
     engine: { Version: engine.Version, ApiVersion: engine.ApiVersion, Os: engine.Os, Arch: engine.Arch },
     containers,
-    volumes: (volumes.Volumes || []).map((v) => ({ Name: v.Name, Driver: v.Driver, Mountpoint: v.Mountpoint })),
-    networks: networks.map((n) => ({ Name: n.Name, Driver: n.Driver, Id: n.Id.slice(0, 12), Labels: n.Labels })),
+    volumes: (volumes.Volumes || [])
+      .filter((v) => !v.Name.startsWith('GITEA-ACTIONS-'))
+      .map((v) => ({ Name: v.Name, Driver: v.Driver, Mountpoint: v.Mountpoint })),
+    networks: netDetail,
     images: images.map((i) => ({ tags: i.RepoTags, sizeMB: Math.round(i.Size / 1048576) })),
   };
 
