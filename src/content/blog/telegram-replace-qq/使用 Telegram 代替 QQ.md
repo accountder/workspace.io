@@ -1,15 +1,15 @@
-﻿---
+---
 title: '使用 Telegram 代替 QQ'
 description: '使用 Docker 配置 Telegram 客户端，替代 QQ 进行日常通讯'
 pubDate: 'Sep 17 2022'
 category: '技术笔记'
 tags: ['Telegram', 'Docker', '通讯']
 ---
-## 平时使用QQ比较少，但是有一些消息还是要看看，所以这也是个解决办法.
 
+### 平时使用QQ比较少，但是有一些消息还是要看看，所以这也是个解决办法.
 
-# 首先你的设备支持Docker
-# 安装 go-cq 并且初始化
+## 首先你的设备支持Docker
+## 安装 go-cq 并且初始化
 ```
 docker run --rm -it \
 --name="cqhttp" \
@@ -162,7 +162,7 @@ servers:
 ```
 * 你只需要填写账户和密码
 
-# 创建一个tg机器人
+## 创建一个tg机器人
 * [Create a bot](https://t.me/BotFather) and sent `/mybots`
 -   sent `/setprivacy` to @BotFather,choose your bot and choose `Disable`.
 -   sent `/setjoingroups` to @BotFather,choose your bot and choose `Enable`.
@@ -182,7 +182,7 @@ rm - 从远端会话中删除一个消息
 info - 展示频道相关信息
 ```
 
-# 安装 [EFB](https://github.com/ehForwarderBot/ehForwarderBot) Docker 
+## 安装 [EFB](https://github.com/ehForwarderBot/ehForwarderBot) Docker 
 
 ```
 docker run -dit \
@@ -265,8 +265,8 @@ GoCQHttp:
     port: 8000                        # 同上
 ```
 
-# 两个容器一起运行
-## go-cq 
+## 两个容器一起运行
+### go-cq 
 
 ```
 docker run -itd \
@@ -281,13 +281,10 @@ go-cq logs
 ![](https://p1.meituan.net/dpplatform/7ef33f4368e89ef8d44b0b4d9334e53111786.png)
 ![](https://p0.meituan.net/dpplatform/0d3a28b7f653625950c0eb2c45c423cc139392.png)
 
-# 特别感谢
+## 特别感谢
 - **[EH Forwarder Bot](https://github.com/ehForwarderBot/ehForwarderBot)**
 - **[Efb-qq-slave](https://github.com/ehForwarderBot/efb-qq-slave)**
 - **[Efb-qq-plugin-go-cqhttp](https://github.com/XYenon/efb-qq-plugin-go-cqhttp)**
 - **[Docker-ehforwarderbot](https://github.com/jemyzhang/docker-ehforwarderbot)**
 - **[安装并使用 EFB：在 Telegram 收发 QQ 消息](https://milkice.me/2018/09/17/efb-how-to-send-and-receive-messages-from-qq-on-telegram/)**
-
-
-
 

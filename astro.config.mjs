@@ -9,6 +9,19 @@ export default defineConfig({
 	site: 'https://accountder.github.io',
 	base: '/workspace.io',
 	integrations: [mdx(), sitemap()],
+	prefetch: {
+		prefetchAll: false,
+		defaultStrategy: 'viewport',
+	},
+	markdown: {
+		shikiConfig: {
+			themes: {
+				light: 'github-light',
+				dark: 'github-dark',
+			},
+			wrap: false,
+		},
+	},
 	fonts: [
 		{
 			provider: fontProviders.local(),

@@ -1,27 +1,167 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const base = import.meta.env.BASE_URL;
+
+const facts = [
+	{ label: '财税经验', value: '3 年+' },
+	{ label: '风险应对', value: '10+ 家' },
+	{ label: '核心行业', value: '3 个' },
+	{ label: '工具栈', value: 'AI · BI · 扩展' },
+];
 ---
 
-<Layout
-	title="关于我"
-	description="专注建安制造、商贸批发及现代服务业的财税合规与风险管理"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		我是一名专注于建安制造、商贸批发及现代服务业的财税合规从业者，拥有三年财务会计与税务咨询经验。多年来深耕行业财税管理，对增值税、企业所得税及高新技术企业税收优惠政策体系有深入理解。
-	</p>
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead
+			title={`关于我 | ${SITE_TITLE}`}
+			description="专注建安制造、商贸批发及现代服务业的财税合规与风险管理。"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="about">
+			<header class="about-head">
+				<p class="eyebrow">ABOUT</p>
+				<h1>关于我</h1>
+				<p class="lead">专注建安制造、商贸批发及现代服务业的财税合规与风险管理。</p>
+			</header>
 
-	<p>
-		擅长依据企业经营特征制定差异化核算方案与税务风险管控策略。从日常账务处理到税务稽查应对，力求在合规前提下帮助企业优化税务成本。累计参与处理十余家企业的税务核查、稽查等风险应对事项，积累了丰富的实战经验。
-	</p>
+			<ul class="facts">
+				{
+					facts.map((f) => (
+						<li>
+							<span class="value">{f.value}</span>
+							<span class="label">{f.label}</span>
+						</li>
+					))
+				}
+			</ul>
 
-	<p>
-		在数字化方面，我积极探索 AI 辅助编程、Chrome 扩展开发及 Power BI 等工具在财务领域的应用，致力于提升财务运营效能，让数据驱动决策成为可能。我相信技术能力与专业知识的融合，能够为传统财税服务带来新的价值。
-	</p>
+			<div class="prose">
+				<p>
+					我是一名专注于建安制造、商贸批发及现代服务业的财税合规从业者，拥有三年财务会计与税务咨询经验。多年来深耕行业财税管理，对增值税、企业所得税及高新技术企业税收优惠政策体系有深入理解。
+				</p>
+				<p>
+					擅长依据企业经营特征制定差异化核算方案与税务风险管控策略。从日常账务处理到税务稽查应对，力求在合规前提下帮助企业优化税务成本。累计参与处理十余家企业的税务核查、稽查等风险应对事项，积累了丰富的实战经验。
+				</p>
+				<p>
+					在数字化方面，我积极探索 AI 辅助编程、Chrome 扩展开发及 Power BI 等工具在财务领域的应用，致力于提升财务运营效能，让数据驱动决策成为可能。我相信技术能力与专业知识的融合，能够为传统财税服务带来新的价值。
+				</p>
+				<p>
+					秉持"专业、细致、可信赖"的服务理念，持续关注财税政策动态与行业最佳实践，为客户提供切实可行的财税解决方案。
+				</p>
+			</div>
 
-	<p>
-		秉持"专业、细致、可信赖"的服务理念，持续关注财税政策动态与行业最佳实践，为客户提供切实可行的财税解决方案。
-	</p>
-</Layout>
+			<div class="about-cta">
+				<a class="btn btn--primary" href={`${base}/blog`}>看看文章</a>
+				<a class="btn btn--ghost" href={`${base}/rss.xml`}>订阅 RSS</a>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.about {
+		width: 100%;
+		max-width: calc(720px + var(--gutter) * 2);
+		margin-inline: auto;
+		padding: var(--space-7) var(--gutter) var(--space-8);
+	}
+
+	.about-head {
+		margin-bottom: var(--space-6);
+	}
+
+	.about-head .eyebrow {
+		margin: 0 0 10px;
+		color: var(--text-muted);
+		letter-spacing: 0.16em;
+		font-size: 11.5px;
+	}
+
+	.about-head h1 {
+		margin: 0 0 10px;
+		font-size: clamp(2rem, 4vw, 2.6rem);
+		letter-spacing: -0.02em;
+	}
+
+	.lead {
+		margin: 0;
+		font-size: 1.02rem;
+		line-height: 1.8;
+		color: var(--text-muted);
+	}
+
+	.facts {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--space-3);
+		margin: 0 0 var(--space-7);
+		padding: 0;
+		list-style: none;
+	}
+
+	.facts li {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: var(--space-4);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg-card);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.facts .value {
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text);
+	}
+
+	.facts .label {
+		font-size: 12.5px;
+		color: var(--text-muted);
+	}
+
+	.prose {
+		font-size: 1.0625rem;
+		line-height: 1.95;
+		color: var(--text-secondary);
+	}
+
+	.prose p {
+		margin: 0 0 1.4em;
+	}
+
+	.prose p:last-child {
+		margin-bottom: 0;
+	}
+
+	.about-cta {
+		display: flex;
+		gap: var(--space-3);
+		margin-top: var(--space-7);
+		padding-top: var(--space-6);
+		border-top: 1px solid var(--border);
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 720px) {
+		.about {
+			padding-top: var(--space-5);
+		}
+		.facts {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.prose {
+			font-size: 1.02rem;
+			line-height: 1.9;
+		}
+	}
+</style>

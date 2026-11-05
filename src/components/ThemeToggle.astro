@@ -21,19 +21,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 32px;
-		height: 32px;
+		width: 36px;
+		height: 36px;
 		padding: 0;
 		border: none;
-		border-radius: 8px;
+		border-radius: 50%;
 		background: transparent;
-		color: rgb(var(--gray));
+		color: var(--text-muted);
 		cursor: pointer;
-		transition: background 0.2s, color 0.2s;
+		transition: background-color 0.18s ease, color 0.18s ease;
 	}
 	.theme-toggle:hover {
-		background: rgb(var(--gray-light), 0.5);
-		color: rgb(var(--black));
+		background: var(--bg-subtle);
+		color: var(--text);
 	}
 	.theme-icon {
 		transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);

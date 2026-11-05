@@ -10,50 +10,61 @@ const base = import.meta.env.BASE_URL;
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title="页面未找到 | {SITE_TITLE}" description="您访问的页面不存在" />
+		<BaseHead title={`页面未找到 | ${SITE_TITLE}`} description="您访问的页面不存在" noindex />
 	</head>
 	<body>
 		<Header />
 		<main class="not-found">
-			<h1>404</h1>
-			<p class="lead">页面未找到</p>
-			<p>您访问的页面不存在，可能已被移除或链接有误。</p>
-			<a href={`${base}/`} class="back-home">&larr; 返回首页</a>
+			<p class="code">404</p>
+			<h1>页面未找到</h1>
+			<p class="lead">这个地址可能已经被移除，或者链接拼错了。</p>
+			<div class="actions">
+				<a class="btn btn--primary" href={`${base}/`}>返回首页</a>
+				<a class="btn btn--ghost" href={`${base}/blog`}>浏览文章</a>
+			</div>
 		</main>
 		<Footer />
 	</body>
 </html>
+
 <style>
 	.not-found {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		text-align: center;
-		padding: 5em 1em;
-		max-width: 600px;
-		margin: 0 auto;
+		min-height: calc(100vh - var(--header-h) - 240px);
+		padding: var(--space-8) var(--gutter);
 	}
-	.not-found h1 {
-		font-size: 5em;
-		margin: 0 0 0.2em;
-		color: var(--accent);
+
+	.code {
+		margin: 0;
+		font-size: clamp(4.5rem, 16vw, 8rem);
+		font-weight: 700;
 		line-height: 1;
+		letter-spacing: -0.04em;
+		background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: transparent;
 	}
+
+	.not-found h1 {
+		margin: var(--space-4) 0 var(--space-2);
+		font-size: clamp(1.4rem, 3vw, 1.8rem);
+	}
+
 	.lead {
-		font-size: 1.2em;
-		font-weight: 600;
-		color: rgb(var(--black));
-		margin-bottom: 0.5em;
+		margin: 0 0 var(--space-6);
+		color: var(--text-muted);
 	}
-	.back-home {
-		display: inline-block;
-		margin-top: 1.5em;
-		padding: 0.6em 1.5em;
-		background: var(--accent);
-		color: white;
-		border-radius: 8px;
-		text-decoration: none;
-		font-weight: 600;
-		transition: opacity 0.2s;
-	}
-	.back-home:hover {
-		opacity: 0.85;
+
+	.actions {
+		display: flex;
+		gap: var(--space-3);
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 </style>
