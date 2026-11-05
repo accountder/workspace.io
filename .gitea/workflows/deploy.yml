@@ -1,0 +1,90 @@
+name: 构建并部署
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.gitea/workflows/deploy.yml'
+
+env:
+  GITEA_URL: http://192.168.5.189:3100
+  REPO: admin/workspace.io
+  # 宿主机 /volume1/web/workspace.io 通过 runner 的 container.options 映射到这里
+  MNT: /deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查挂载点
+        run: |
+          echo "=== $MNT 是否为挂载点 ==="
+          if ! grep -qE "[[:space:]]${MNT}[[:space:]]" /proc/mounts; then
+            echo "::error::$MNT 不是挂载点，宿主机目录没有映射进 job 容器"
+            echo "请在 runner 的 config.yaml 里加 container.options: \"--volume 宿主机路径:/deploy\"，然后重启 runner"
+            exit 1
+          fi
+          grep -E "[[:space:]]${MNT}[[:space:]]" /proc/mounts
+          df -h "$MNT" | tail -1
+          echo "--- 现有内容 ---"
+          ls -la "$MNT" | head -20
+
+      - name: 内容安全校验
+        run: |
+          if [ -n "$(ls -A "$MNT" 2>/dev/null)" ]; then
+            if [ ! -f "$MNT/index.html" ] && [ ! -d "$MNT/_astro" ]; then
+              echo "::error::$MNT 非空，且不像本博客的构建产物，已中止以免误删"
+              ls -la "$MNT" | head -20
+              exit 1
+            fi
+            echo "目录已有历史产物，允许覆盖"
+          else
+            echo "目录为空，首次部署"
+          fi
+
+      - name: 拉取代码
+        run: |
+          git clone --depth 1 "$GITEA_URL/$REPO.git" /tmp/src
+          cd /tmp/src
+          echo "提交: $(git log -1 --format='%h %s')"
+
+      - name: 安装依赖
+        working-directory: /tmp/src
+        run: npm ci --no-audit --no-fund
+
+      - name: 构建
+        working-directory: /tmp/src
+        run: |
+          npm run build
+          echo "--- 产物 ---"
+          du -sh docs
+          find docs -type f | wc -l
+
+      - name: 同步到宿主机
+        run: |
+          find "$MNT" -mindepth 1 -delete
+          tar -C /tmp/src/docs -cf - . | tar -C "$MNT" -xf -
+          # job 容器以 root 身份写文件，放开读权限，避免 Web Station 的 http 用户读不到
+          chmod -R a+rX "$MNT"
+          echo "已写入 $(find "$MNT" -type f | wc -l) 个文件"
+          ls -la "$MNT" | head -10
+
+      - name: 校验访问
+        run: |
+          for p in "" "blog/" "rss.xml"; do
+            body=$(curl -s -m 10 "http://192.168.5.189/workspace.io/$p" || true)
+            code=$(curl -s -m 10 -o /dev/null -w "%{http_code}" "http://192.168.5.189/workspace.io/$p" || echo "000")
+            echo "  /workspace.io/$p -> HTTP:$code 长度:${#body}"
+            # DSM 的跳转页对任意路径都返回 200，必须校验内容特征
+            if ! echo "$body" | grep -q "workspace.io/_astro/\|<?xml"; then
+              echo "::warning::该路径返回的不是博客内容，检查 Web Station 的站点根目录/虚拟主机是否指向 /volume1/web"
+            else
+              echo "    ✓ 内容校验通过"
+            fi
+          done
