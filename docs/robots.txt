@@ -1,4 +1,0 @@
-﻿User-agent: *
-Allow: /
-
-Sitemap: https://accountder.github.io/workspace.io/sitemap-index.xml

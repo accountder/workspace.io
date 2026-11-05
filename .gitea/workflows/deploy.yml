@@ -68,13 +68,13 @@ jobs:
         run: |
           npm run build
           echo "--- 产物 ---"
-          du -sh docs
-          find docs -type f | wc -l
+          du -sh dist
+          find dist -type f | wc -l
 
       - name: 同步到宿主机
         run: |
           find "$SITE" -mindepth 1 -delete
-          tar -C /tmp/src/docs -cf - . | tar -C "$SITE" -xf -
+          tar -C /tmp/src/dist -cf - . | tar -C "$SITE" -xf -
           # job 容器以 root 身份写文件，放开读权限，避免 Web Station 的 http 用户读不到
           chmod -R a+rX "$SITE"
           echo "已写入 $(find "$SITE" -type f | wc -l) 个文件"
