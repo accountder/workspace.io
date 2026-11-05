@@ -85,16 +85,43 @@ function pickInspect(info) {
   const targets = list.filter((c) => !(c.Names[0] || '').startsWith('/GITEA-ACTIONS-'));
   console.log(`容器总数 ${list.length}，排除 job 容器后 ${targets.length}`);
 
+  // 镜像默认值缓存：用于区分「用户设置的 env/cmd」和「镜像自带的」
+  const imgCache = new Map();
+  async function imageDefaults(imageId) {
+    if (imgCache.has(imageId)) return imgCache.get(imageId);
+    let val = null;
+    try {
+      const img = await api(`/images/${encodeURIComponent(imageId)}/json`);
+      const c = img.Config || {};
+      val = {
+        Env: c.Env || [],
+        Cmd: c.Cmd || null,
+        Entrypoint: c.Entrypoint || null,
+        WorkingDir: c.WorkingDir || '',
+        User: c.User || '',
+        Labels: c.Labels || {},
+        ExposedPorts: c.ExposedPorts || {},
+      };
+    } catch (e) {
+      console.log(`  镜像默认值获取失败 ${imageId.slice(0, 19)}: ${e.message}`);
+    }
+    imgCache.set(imageId, val);
+    return val;
+  }
+
   const containers = [];
   for (const c of targets) {
     const name = (c.Names[0] || '').replace(/^\//, '');
     const labels = c.Labels || {};
     try {
       const info = await api(`/containers/${c.Id}/json`);
+      const defaults = await imageDefaults(info.Image);
+      const picked = pickInspect(info);
       containers.push({
         name,
         id: c.Id.slice(0, 12),
         image: c.Image,
+        imageId: info.Image,
         state: c.State,
         status: c.Status,
         created: c.Created,
@@ -102,7 +129,8 @@ function pickInspect(info) {
         service: labels['com.docker.compose.service'] || null,
         configFiles: labels['com.docker.compose.project.config_files'] || null,
         workingDir: labels['com.docker.compose.project.working_dir'] || null,
-        inspect: pickInspect(info),
+        imageDefaults: defaults,
+        inspect: picked,
       });
     } catch (e) {
       console.log(`  跳过 ${name}: ${e.message}`);
