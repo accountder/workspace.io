@@ -15,8 +15,10 @@ on:
 env:
   GITEA_URL: http://192.168.5.189:3100
   REPO: admin/workspace.io
-  # 宿主机 /volume1/web/workspace.io 通过 runner 的 container.options 映射到这里
+  # 宿主机 /volume1/web 通过 runner 的 container.options 映射到 /deploy
   MNT: /deploy
+  # Web Station 的站点目录，挂载正确时会自动创建
+  SITE: /deploy/workspace.io
 
 jobs:
   deploy:
@@ -27,23 +29,26 @@ jobs:
           echo "=== $MNT 是否为挂载点 ==="
           if ! grep -qE "[[:space:]]${MNT}[[:space:]]" /proc/mounts; then
             echo "::error::$MNT 不是挂载点，宿主机目录没有映射进 job 容器"
-            echo "检查 runner config.yaml 的 container.valid_volumes 是否包含 /volume1/web/workspace.io"
+            echo "检查 runner config.yaml 的 container.valid_volumes 是否包含 /volume1/web"
             exit 1
           fi
           grep -E "[[:space:]]${MNT}[[:space:]]" /proc/mounts
           df -h "$MNT" | tail -1
-          echo "--- 现有内容 ---"
+          echo "--- $MNT 现有内容 ---"
           ls -la "$MNT" | head -20
 
-      - name: 内容安全校验
+      - name: 准备站点目录
         run: |
-          if [ -n "$(ls -A "$MNT" 2>/dev/null)" ]; then
-            if [ ! -f "$MNT/index.html" ] && [ ! -d "$MNT/_astro" ]; then
-              echo "::error::$MNT 非空，且不像本博客的构建产物，已中止以免误删"
-              ls -la "$MNT" | head -20
+          mkdir -p "$SITE"
+          echo "站点目录: $SITE"
+          ls -ld "$SITE"
+          if [ -n "$(ls -A "$SITE" 2>/dev/null)" ]; then
+            if [ ! -f "$SITE/index.html" ] && [ ! -d "$SITE/_astro" ]; then
+              echo "::error::$SITE 非空且不像本博客的构建产物，已中止以免误删"
+              ls -la "$SITE" | head -20
               exit 1
             fi
-            echo "目录已有历史产物，允许覆盖"
+            echo "已有历史产物，允许覆盖"
           else
             echo "目录为空，首次部署"
           fi
@@ -68,12 +73,12 @@ jobs:
 
       - name: 同步到宿主机
         run: |
-          find "$MNT" -mindepth 1 -delete
-          tar -C /tmp/src/docs -cf - . | tar -C "$MNT" -xf -
+          find "$SITE" -mindepth 1 -delete
+          tar -C /tmp/src/docs -cf - . | tar -C "$SITE" -xf -
           # job 容器以 root 身份写文件，放开读权限，避免 Web Station 的 http 用户读不到
-          chmod -R a+rX "$MNT"
-          echo "已写入 $(find "$MNT" -type f | wc -l) 个文件"
-          ls -la "$MNT" | head -10
+          chmod -R a+rX "$SITE"
+          echo "已写入 $(find "$SITE" -type f | wc -l) 个文件"
+          ls -la "$SITE" | head -10
 
       - name: 校验访问
         run: |
