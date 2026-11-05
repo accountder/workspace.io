@@ -86,8 +86,8 @@ jobs:
             body=$(curl -s -m 10 "http://192.168.5.189/workspace.io/$p" || true)
             code=$(curl -s -m 10 -o /dev/null -w "%{http_code}" "http://192.168.5.189/workspace.io/$p" || echo "000")
             echo "  /workspace.io/$p -> HTTP:$code 长度:${#body}"
-            # DSM 的跳转页对任意路径都返回 200，必须校验内容特征
-            if ! echo "$body" | grep -q "workspace.io/_astro/\|<?xml"; then
+            # 用 bash 内建匹配，避免 echo|grep -q 的 SIGPIPE（pipefail 下会误判为失败）
+            if [[ "$body" != *"_astro"* && "$body" != *"<?xml"* ]]; then
               echo "::warning::该路径返回的不是博客内容，检查 Web Station 的站点根目录/虚拟主机是否指向 /volume1/web"
             else
               echo "    ✓ 内容校验通过"
