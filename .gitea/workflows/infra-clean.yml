@@ -1,0 +1,19 @@
+name: 清理采集产物
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 删除 _infra.json
+        run: |
+          if [ -f /deploy/_infra.json ]; then
+            rm -f /deploy/_infra.json
+            echo "已删除 /deploy/_infra.json"
+          else
+            echo "文件不存在，无需清理"
+          fi
+          echo "--- 站点根目录现有条目 ---"
+          ls -1 /deploy | head -20
