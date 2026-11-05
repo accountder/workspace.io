@@ -1,0 +1,22 @@
+name: 环境自检
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查运行时环境
+        run: |
+          echo "job 容器已启动"
+          echo "--- 系统 ---"
+          head -2 /etc/os-release
+          echo "--- Node ---"
+          node --version
+          npm --version
+          echo "--- 能否访问 Gitea ---"
+          curl -s -o /dev/null -w "gitea api: %{http_code}\n" http://192.168.5.189:3100/api/v1/version
+          echo "--- 工作目录 ---"
+          pwd
+          ls -la
