@@ -27,7 +27,7 @@ jobs:
           echo "=== $MNT 是否为挂载点 ==="
           if ! grep -qE "[[:space:]]${MNT}[[:space:]]" /proc/mounts; then
             echo "::error::$MNT 不是挂载点，宿主机目录没有映射进 job 容器"
-            echo "请在 runner 的 config.yaml 里加 container.options: \"--volume 宿主机路径:/deploy\"，然后重启 runner"
+            echo "检查 runner config.yaml 的 container.valid_volumes 是否包含 /volume1/web/workspace.io"
             exit 1
           fi
           grep -E "[[:space:]]${MNT}[[:space:]]" /proc/mounts
