@@ -1,0 +1,17 @@
+name: 采集内网 Docker 配置
+
+on:
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载采集脚本
+        run: |
+          curl -fsS -m 30 -o /tmp/collect.js \
+            "http://192.168.5.189:3100/admin/workspace.io/raw/branch/main/scripts/collect-infra.js"
+          echo "脚本大小: $(wc -c < /tmp/collect.js) 字节"
+
+      - name: 执行采集
+        run: node /tmp/collect.js
