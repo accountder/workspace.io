@@ -1,0 +1,30 @@
+name: 内网 Docker 配置采集
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 探测 docker.sock 可达性
+        run: |
+          echo "=== 1. socket 文件 ==="
+          ls -l /var/run/docker.sock 2>&1 || echo "SOCKET_MISSING"
+          ls -l /run/docker.sock 2>&1 || true
+
+          echo "=== 2. Docker API 版本 ==="
+          curl -s -m 10 --unix-socket /var/run/docker.sock http://localhost/version || echo "API_FAIL"
+
+          echo "=== 3. 容器数量 ==="
+          curl -s -m 15 --unix-socket /var/run/docker.sock \
+            "http://localhost/v1.41/containers/json?all=1" -o /tmp/containers.json
+          node -e "
+            const d = require('/tmp/containers.json');
+            console.log('容器数:', d.length);
+            for (const c of d) {
+              const name = (c.Names || []).join(',').replace(/^\//, '');
+              const proj = (c.Labels || {})['com.docker.compose.project'] || '-';
+              console.log('  -', name, '|', c.Image, '|', c.State, '| project:', proj);
+            }
+          " 2>&1 | head -40
